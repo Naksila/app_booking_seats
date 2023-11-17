@@ -14,16 +14,6 @@ class BookingSeatPage extends StatefulWidget {
   State<BookingSeatPage> createState() => _BookingSeatPageState();
 }
 
-enum ShirtSize { extraSmall, small, medium, large, extraLarge }
-
-const List<(ShirtSize, String)> shirtSizeOptions = <(ShirtSize, String)>[
-  (ShirtSize.extraSmall, 'XS'),
-  (ShirtSize.small, 'S'),
-  (ShirtSize.medium, 'M'),
-  (ShirtSize.large, 'L'),
-  (ShirtSize.extraLarge, 'XL'),
-];
-
 class _BookingSeatPageState extends State<BookingSeatPage> {
   List<String> rowName = [
     'A',
