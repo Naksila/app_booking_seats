@@ -15,8 +15,6 @@ class ResourceReprositoryImpl implements ResourceRepository {
     try {
       var result = await resourceRemoteDataSource.getBookingSeat();
 
-      // print('BookingSeatEntity   >>> ' + result.toString());
-
       return Right(result.toEntity(bookingSeatModel: result));
     } on ServerFailure catch (e) {
       return Left(ServerFailure('Error'));

@@ -4,7 +4,6 @@ import 'package:app_booking_seat/core/utils/failure.dart';
 import 'package:app_booking_seat/data/models/booking_seat_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 
 abstract class ResourceRemoteDataSource {
   Future<BookingSeatModel> getBookingSeat();
@@ -29,7 +28,6 @@ class ResourceRemoteDataSourceImpl extends ResourceRemoteDataSource {
         throw ServerFailure(response.statusMessage.toString());
       }
 
-      print(json.encode(response.data));
       return BookingSeatModel.fromJson(response.data);
     } catch (e) {
       throw ServerFailure(e.toString());

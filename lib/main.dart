@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 void main() {
   di.init();
   runApp(MaterialApp(
-    home: MyApp(),
-  ));
+      home: MyApp(),
+      theme: ThemeData(
+        fontFamily: 'DB Heavent',
+      )));
 }
 
 class MyApp extends StatelessWidget {
