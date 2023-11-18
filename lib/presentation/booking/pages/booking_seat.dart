@@ -18,10 +18,12 @@ class _BookingSeatPageState extends State<BookingSeatPage> {
   List<String> rowName = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   List<SeatEntity>? seats;
-  List _seat = [];
+  List seatSelected = [];
   int? rows;
   int? columns;
   bool isSelected = false;
+
+  int? configSeat = 1;
 
   @override
   void initState() {
@@ -38,7 +40,7 @@ class _BookingSeatPageState extends State<BookingSeatPage> {
           backgroundColor: Colors.white,
           title: const Text(
             'เลือกที่นั่ง',
-            style: TextStyle(color: Colors.black, fontSize: 30),
+            style: TextStyle(color: Colors.black, fontSize: 24),
           ),
         ),
         body: SingleChildScrollView(
@@ -113,29 +115,37 @@ class _BookingSeatPageState extends State<BookingSeatPage> {
                                     height: 40,
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: groups[_index][index]
+                                          backgroundColor: ((groups[_index]
+                                                          [index]
                                                       .isSelected ??
-                                                  false
+                                                  false))
                                               ? Colors.amber[700]
                                               : Colors.grey),
                                       onPressed: () {
                                         SeatEntity seatEntity =
                                             groups[_index][index];
+
                                         isSelected =
                                             seatEntity.isSelected ?? false;
+
                                         setState(() {
-                                          seatEntity.isSelected = !isSelected;
+                                          if ((seatSelected.length + 1) <=
+                                              configSeat!) {
+                                            seatEntity.isSelected = !isSelected;
+                                          } else {
+                                            seatEntity.isSelected = false;
+                                          }
                                         });
 
-                                        _seat = groups
+                                        seatSelected = groups
                                             .expand((element) => element)
                                             .where((i) => i.isSelected == true)
                                             .toList();
 
-                                        _seat.forEach(
+                                        seatSelected.forEach(
                                             (element) => element.seatNumber);
                                       },
-                                      child: Text(''),
+                                      child: const Text(''),
                                     ),
                                   ),
                                   const SizedBox(width: 10)
@@ -165,7 +175,7 @@ class _BookingSeatPageState extends State<BookingSeatPage> {
                           runSpacing: 5,
                           spacing: 5,
                           children: [
-                            for (final data in _seat) ...{
+                            for (final data in seatSelected) ...{
                               if (data.isSelected == true) ...{
                                 Tabs(
                                   title: data.seatNumber,
@@ -173,6 +183,10 @@ class _BookingSeatPageState extends State<BookingSeatPage> {
                                     setState(() {
                                       data.isSelected = !data.isSelected;
                                     });
+                                    seatSelected = groups
+                                        .expand((element) => element)
+                                        .where((i) => i.isSelected == true)
+                                        .toList();
                                   },
                                 ),
                               }
