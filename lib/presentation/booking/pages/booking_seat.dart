@@ -15,13 +15,7 @@ class BookingSeatPage extends StatefulWidget {
 }
 
 class _BookingSeatPageState extends State<BookingSeatPage> {
-  List<String> rowName = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-  ];
+  List<String> rowName = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
   List<SeatEntity>? seats;
   List _seat = [];
@@ -72,116 +66,121 @@ class _BookingSeatPageState extends State<BookingSeatPage> {
                           : i + columns!));
                 }
 
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          for (int i = 0; i < columns!; i++) ...{
-                            SizedBox(
-                              width: 50,
-                              height: 40,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '${i + 1}',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          },
-                        ],
-                      ),
-                      for (final (_index, item) in rowName.indexed) ...{
+                return Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Row(
                           children: [
-                            SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 20,
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            for (int i = 0; i < columns!; i++) ...{
+                              SizedBox(
+                                width: 50,
+                                height: 40,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '${i + 1}',
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                               ),
-                            ),
-                            for (final (index, data) in groups.indexed) ...{
-                              SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          groups[_index][index].isSelected ??
-                                                  false
-                                              ? Colors.amber[700]
-                                              : Colors.grey),
-                                  onPressed: () {
-                                    SeatEntity seatEntity =
-                                        groups[_index][index];
-                                    isSelected = seatEntity.isSelected ?? false;
-                                    setState(() {
-                                      seatEntity.isSelected = !isSelected;
-                                    });
-
-                                    _seat = groups
-                                        .expand((element) => element)
-                                        .where((i) => i.isSelected == true)
-                                        .toList();
-
-                                    _seat.forEach(
-                                        (element) => element.seatNumber);
-                                  },
-                                  child: Text(''),
-                                ),
-                              ),
-                              const SizedBox(width: 10)
                             },
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      },
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      const Divider(
-                        height: 20,
-                        color: Colors.grey,
-                      ),
-                      const Text(
-                        'ที่นั่ง',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Wrap(
-                        runSpacing: 5,
-                        spacing: 5,
-                        children: [
-                          for (final data in _seat) ...{
-                            if (data.isSelected == true) ...{
-                              Tabs(
-                                title: data.seatNumber,
-                                onPressed: () {
-                                  setState(() {
-                                    data.isSelected = !data.isSelected;
-                                  });
+                        for (final (_index, item) in rowName.indexed) ...{
+                          if (_index < rows!) ...{
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                for (final (index, data) in groups.indexed) ...{
+                                  SizedBox(
+                                    width: 40,
+                                    height: 40,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: groups[_index][index]
+                                                      .isSelected ??
+                                                  false
+                                              ? Colors.amber[700]
+                                              : Colors.grey),
+                                      onPressed: () {
+                                        SeatEntity seatEntity =
+                                            groups[_index][index];
+                                        isSelected =
+                                            seatEntity.isSelected ?? false;
+                                        setState(() {
+                                          seatEntity.isSelected = !isSelected;
+                                        });
+
+                                        _seat = groups
+                                            .expand((element) => element)
+                                            .where((i) => i.isSelected == true)
+                                            .toList();
+
+                                        _seat.forEach(
+                                            (element) => element.seatNumber);
+                                      },
+                                      child: Text(''),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10)
                                 },
-                              ),
+                              ],
+                            ),
+                          },
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        },
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        const Divider(
+                          height: 20,
+                          color: Colors.grey,
+                        ),
+                        const Text(
+                          'ที่นั่ง',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Wrap(
+                          runSpacing: 5,
+                          spacing: 5,
+                          children: [
+                            for (final data in _seat) ...{
+                              if (data.isSelected == true) ...{
+                                Tabs(
+                                  title: data.seatNumber,
+                                  onPressed: () {
+                                    setState(() {
+                                      data.isSelected = !data.isSelected;
+                                    });
+                                  },
+                                ),
+                              }
                             }
-                          }
-                        ],
-                      ),
-                    ]);
+                          ],
+                        ),
+                      ]),
+                );
               } else if (state is GetSeatFailed) {
                 return Column(children: [Text(state.message)]);
               } else {
